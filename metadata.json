@@ -1,0 +1,5 @@
+{
+  "name": "AudioScribe AI",
+  "description": "A smart YouTube video transcriber that automatically detects existing subtitles or uses Gemini AI to generate transcripts from video/audio files.",
+  "requestFramePermissions": []
+}
