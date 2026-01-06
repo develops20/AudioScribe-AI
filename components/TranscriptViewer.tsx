@@ -4,9 +4,14 @@ import { Copy, Check, Download } from 'lucide-react';
 interface TranscriptViewerProps {
   transcript: string;
   title?: string;
+  fileName?: string;
 }
 
-const TranscriptViewer: React.FC<TranscriptViewerProps> = ({ transcript, title = "Transcript" }) => {
+const TranscriptViewer: React.FC<TranscriptViewerProps> = ({ 
+  transcript, 
+  title = "Transcript", 
+  fileName = "transcript" 
+}) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -16,10 +21,17 @@ const TranscriptViewer: React.FC<TranscriptViewerProps> = ({ transcript, title =
   };
 
   const handleDownload = () => {
+    // Remove timestamps (e.g., [00:00] or [00:00:00])
+    const cleanTranscript = transcript.replace(/\[\d{1,2}:\d{2}(:\d{2})?\]\s*/g, '');
+    
     const element = document.createElement("a");
-    const file = new Blob([transcript], {type: 'text/plain'});
+    const file = new Blob([cleanTranscript], {type: 'text/plain'});
     element.href = URL.createObjectURL(file);
-    element.download = "transcript.txt";
+    
+    // Ensure filename ends in .txt
+    const safeFileName = fileName.endsWith('.txt') ? fileName : `${fileName}.txt`;
+    element.download = safeFileName;
+    
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);

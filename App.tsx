@@ -193,6 +193,15 @@ const App: React.FC = () => {
     setLogs([]);
   };
 
+  // Helper to determine filename for download
+  const getDownloadFileName = () => {
+    if (!videoMeta) return 'transcript';
+    // If it's a local file, use the title (which contains the filename)
+    if (videoMeta.id === 'local-file') return videoMeta.title;
+    // If it's a YouTube video, use the ID
+    return videoMeta.id;
+  };
+
   return (
     <div className="min-h-screen bg-black text-gray-100 selection:bg-red-900 selection:text-white pb-20">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -352,7 +361,7 @@ const App: React.FC = () => {
                     <span className="font-medium">Transcript Ready</span>
                   </div>
                 </div>
-                <TranscriptViewer transcript={transcript} />
+                <TranscriptViewer transcript={transcript} fileName={getDownloadFileName()} />
               </>
             )}
           </div>

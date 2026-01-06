@@ -46,6 +46,7 @@ export const transcribeMedia = async (file: File, logCallback?: (msg: string) =>
       contentPart = { inlineData: inlineData };
     } else {
       if (logCallback) logCallback(`File is ${sizeMB.toFixed(2)}MB (>20MB limit). Uploading to Gemini Storage...`);
+      if (logCallback) logCallback("Disclaimer: Only the first 20Mb of audio will be transcribed.");
       
       const mimeType = file.type || 'audio/mp3'; // Fallback if browser doesn't detect type
 
